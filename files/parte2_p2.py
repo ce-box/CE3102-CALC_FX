@@ -16,6 +16,10 @@ def biseccion(func,rango, tol, iterMax):
     if (tol < 0):
         return print("La tolerancia debe ser mayor que cero")
 
+    #Verifica que se cumpla con el teorema de Bolzano
+    if (fx(rango[0])*fx(rango[1]) > 0):
+        return print("No cumple con el teorema de Bolzano")
+
     while(cont <= iterMax):
         
         x = (rango[0] + rango[1]) / 2 #Calcula punto medio

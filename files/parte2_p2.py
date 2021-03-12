@@ -32,8 +32,37 @@ def biseccion(func,rango, tol, iterMax):
 
         cont += 1 #Incrementa contador
 
-    return [x, np.absolute(y), cont] #Retorna el cero de f(x), el error, y las iteraciones
+    return [x, np.absolute(y), cont] #Retorna la aproximación del cero de f(x), el error, y la cantidad de iteraciones
 
+def newton_raphson(func, xk, tol, iterMax):
+
+    #Funcion de prueba: "cos(2*x)**2 - x**2"
+
+    x = Symbol('x') #Inicializa "x" como símbolo
+    f = sympify(func) #Se traduce el string "func" a una función de sympy
+    df = f.diff(x) #Se calcula la derivada de "f"
+    
+    fx = lambdify(x, f, modules=['numpy']) #Se inicializa la función f(x)
+    dfx = lambdify(x, df, modules=['numpy']) #Se inicializa la derivada de la función f(x)
+
+    cont = 0 #Se inicializa el contador
+
+    #Verifica que la tolerancia no sea negativa
+    if (tol < 0):
+        return print("La tolerancia debe ser mayor que cero")
+
+    while(cont < iterMax):
+
+        xk = xk - ((fx(xk))/(dfx(xk)))
+        y = fx(xk)
+
+        if(np.absolute(y) < tol):
+            break
+
+        cont += 1 #Incrementa contador
+
+    return [xk, np.absolute(y), cont] #Retorna la aproximación del cero de la función, el error, y la cantidad de iteraciones
+        
 
 def secante(func, x0, x1, tol, iterMax):
 

@@ -17,7 +17,7 @@ def biseccion(func,rango, tol, iterMax):
         return print("La tolerancia debe ser mayor que cero")
 
     #Verifica que se cumpla con el teorema de Bolzano
-    if (fx(rango[0])*fx(rango[1]) > 0):
+    if(not(bolzano(fx(rango[0]),fx(rango[1])))):
         return print("No cumple con el teorema de Bolzano")
 
     while(cont <= iterMax):
@@ -31,13 +31,52 @@ def biseccion(func,rango, tol, iterMax):
         if(y*fx(rango[1]) < 0):
             rango[0] = x
 
+        cont += 1 #Incrementa contador
+
         if(np.absolute(y) < tol):
             break
 
-        cont += 1 #Incrementa contador
-
     return [x, np.absolute(y), cont] #Retorna la aproximación del cero de f(x), el error, y la cantidad de iteraciones
 
+def falsa_posicion(func, rango, tol, iterMax):
+
+    #Funcion de prueba: 
+
+    x = Symbol('x') #Inicializa "x" como símbolo
+    f = sympify(func) #Se traduce el string "func" a una función de sympy 
+    fx = lambdify(x, f, modules=['numpy']) #Se inicializa la función f(x)
+
+    cont = 0 #Se inicializa el contador
+
+    #Verifica que la tolerancia no sea negativa
+    if (tol < 0):
+        return print("La tolerancia debe ser mayor que cero")
+
+    #Verifica que se cumpla con el teorema de Bolzano
+    if(not(bolzano(fx(rango[0]),fx(rango[1])))):
+        return print("No cumple con el teorema de Bolzano")
+
+    b = rango[0]
+    a = rango[1]
+    xk = a - ((a-b)/(fx(a)-fx(b)))*fx(a)
+
+    while(cont < iterMax):
+
+        if(bolzano(fx(a),fx(xk))):
+            b = xk
+            xk = xk - ((xk-a)/(fx(xk)-fx(a))*fx(xk))
+        elif(bolzano(fx(xk),fx(b))):
+            a = xk
+            xk = xk - ((xk-b)/(fx(xk)-fx(b))*fx(xk))
+
+        cont += 1 #Incrementa contador
+
+        if(np.absolute(fx(xk)) < tol):
+            break
+
+    return [xk, np.absolute(fx(xk)), cont]
+    
+ 
 def newton_raphson(func, xk, tol, iterMax):
 
     #Funcion de prueba: "cos(2*x)**2 - x**2"
@@ -98,3 +137,10 @@ def secante(func, x0, x1, tol, iterMax):
         cont += 1 #Incrementa contador
 
     return [xk, cont, np.absolute(fx(xk))] #Retorna xk, las iteraciones, y f(x)
+
+def bolzano(x0,x1):
+
+    if(x0*x1 < 0):
+        return True
+    else:
+        return False

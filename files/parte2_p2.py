@@ -1,14 +1,18 @@
 import numpy as np
 import sys
 from sympy import *
+from matplotlib import pyplot as plt
 
 def biseccion(func,rango, tol, iterMax):
     
-    #Funcion de prueba: "E**x - x - 2"
+    #Funcion de prueba: "E**x - x - 2", [0,2], 10**(-10), 100
 
     x = Symbol('x') #Inicializa "x" como símbolo
     f = sympify(func) #Se traduce el string "func" a una función de sympy 
     fx = lambdify(x, f, modules=['numpy']) #Se inicializa la función f(x)
+
+    D = []
+    A = []
 
     cont = 0 #Se inicializa el contador
 
@@ -24,11 +28,14 @@ def biseccion(func,rango, tol, iterMax):
         
         x = (rango[0] + rango[1]) / 2 #Calcula punto medio
         y = fx(x) #Se calcula el valor de f(x)
+
+        D.append(x)
+        A.append(y)
         
         if(fx(rango[0])*y < 0):
             rango[1] = x
             
-        if(y*fx(rango[1]) < 0):
+        elif(y*fx(rango[1]) < 0):
             rango[0] = x
 
         cont += 1 #Incrementa contador
@@ -36,17 +43,25 @@ def biseccion(func,rango, tol, iterMax):
         if(np.absolute(y) < tol):
             break
 
+    plt.plot(np.array(D), np.array(A))
+    plt.title("Gráfico")
+    plt.legend(["Dominio","Ámbito"])
+    plt.show() 
+
     return [x, np.absolute(y), cont] #Retorna la aproximación del cero de f(x), el error, y la cantidad de iteraciones
 
 def falsa_posicion(func, rango, tol, iterMax):
 
-    #Funcion de prueba: 
+    #Funcion de prueba: "E**x - x - 2", [0,2], 10**(-10), 100
 
     x = Symbol('x') #Inicializa "x" como símbolo
     f = sympify(func) #Se traduce el string "func" a una función de sympy 
     fx = lambdify(x, f, modules=['numpy']) #Se inicializa la función f(x)
 
     cont = 0 #Se inicializa el contador
+
+    D = []
+    A = []
 
     #Verifica que la tolerancia no sea negativa
     if (tol < 0):
@@ -58,7 +73,11 @@ def falsa_posicion(func, rango, tol, iterMax):
 
     b = rango[0]
     a = rango[1]
+    
     xk = a - ((a-b)/(fx(a)-fx(b)))*fx(a)
+
+    D.append(xk)
+    A.append(fx(xk))
 
     while(cont < iterMax):
 
@@ -73,17 +92,25 @@ def falsa_posicion(func, rango, tol, iterMax):
             a = xk
             xk = xk - ((xk-b)/(fx(xk)-fx(b))*fx(xk))
 
+        D.append(xk)
+        A.append(fx(xk))
+
         cont += 1 #Incrementa contador
 
         if(np.absolute(fx(xk)) < tol):
             break
+
+    plt.plot(np.array(D), np.array(A))
+    plt.title("Gráfico")
+    plt.legend(["Dominio","Ámbito"])
+    plt.show() 
 
     return [xk, np.absolute(fx(xk)), cont]
     
  
 def newton_raphson(func, xk, tol, iterMax):
 
-    #Funcion de prueba: "cos(2*x)**2 - x**2"
+    #Funcion de prueba: "cos(2*x)**2 - x**2", 3/4, 10**(-10), 100
 
     x = Symbol('x') #Inicializa "x" como símbolo
     f = sympify(func) #Se traduce el string "func" a una función de sympy
@@ -91,6 +118,9 @@ def newton_raphson(func, xk, tol, iterMax):
     
     fx = lambdify(x, f, modules=['numpy']) #Se inicializa la función f(x)
     dfx = lambdify(x, df, modules=['numpy']) #Se inicializa la derivada de la función f(x)
+
+    D = []
+    A = []
 
     cont = 0 #Se inicializa el contador
 
@@ -106,24 +136,34 @@ def newton_raphson(func, xk, tol, iterMax):
         xk = xk - ((fx(xk))/(dfx(xk)))
         y = fx(xk)
 
+        D.append(xk)
+        A.append(y)
+
         if(np.absolute(y) < tol):
             break
 
         cont += 1 #Incrementa contador
+
+    plt.plot(np.array(D), np.array(A))
+    plt.title("Gráfico")
+    plt.legend(["Dominio","Ámbito"])
+    plt.show() 
 
     return [xk, np.absolute(y), cont] #Retorna la aproximación del cero de la función, el error, y la cantidad de iteraciones
         
 
 def secante(func, x0, x1, tol, iterMax):
 
-    #Función de prueba: "cos(2*x)**2 - x**2"
+    #Función de prueba: "cos(2*x)**2 - x**2", 3/4, 1/2, 10**(-10), 100
 
     x = Symbol('x') #Inicializa "x" como símbolo
     f = sympify(func) #Se traduce el string "func" a una función de sympy 
     fx = lambdify(x, f, modules=['numpy']) #Se inicializa la función f(x)
 
     cont = 0 #Se inicializa el contador
-    errores = [] #Se crea una lista de los errores calculados para graficar
+
+    D = []
+    A = [] #Se crea una lista de los errores calculados para graficar
 
     #Verifica que la tolerancia no sea negativa
     if (tol < 0):
@@ -136,7 +176,9 @@ def secante(func, x0, x1, tol, iterMax):
 
         xk = x1 - ((x1-x0)/(fx(x1)-fx(x0)))*fx(x1) #Se calcula xk
         error = np.absolute(fx(xk)) #Se calcula el error
-        errores.append(error) #Se añade el error a la lista de errores
+
+        D.append(xk)
+        A.append(error) #Se añade el error a la lista de errores
 
         if(error < tol):
             break
@@ -145,6 +187,11 @@ def secante(func, x0, x1, tol, iterMax):
         x1 = xk #Reasigna x1
 
         cont += 1 #Incrementa contador
+
+    plt.plot(np.array(D), np.array(A))
+    plt.title("Gráfico")
+    plt.legend(["Dominio","Ámbito"])
+    plt.show() 
 
     return [xk, cont, np.absolute(fx(xk))] #Retorna xk, las iteraciones, y f(x)
 

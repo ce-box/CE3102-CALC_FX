@@ -63,9 +63,13 @@ def falsa_posicion(func, rango, tol, iterMax):
     while(cont < iterMax):
 
         if(bolzano(fx(a),fx(xk))):
+            if((fx(xk)-fx(a)) == 0): #Indefinición de denominador
+                break
             b = xk
             xk = xk - ((xk-a)/(fx(xk)-fx(a))*fx(xk))
         elif(bolzano(fx(xk),fx(b))):
+            if((fx(xk)-fx(b)) == 0): #Indefinición de denominador
+                break
             a = xk
             xk = xk - ((xk-b)/(fx(xk)-fx(b))*fx(xk))
 
@@ -96,6 +100,9 @@ def newton_raphson(func, xk, tol, iterMax):
 
     while(cont < iterMax):
 
+        if(dfx(xk) == 0): #Indefinición de denominador
+            break
+
         xk = xk - ((fx(xk))/(dfx(xk)))
         y = fx(xk)
 
@@ -124,6 +131,9 @@ def secante(func, x0, x1, tol, iterMax):
 
     while(cont <= iterMax):
 
+        if((fx(x1)-fx(x0)) == 0): #Indefinición de denominador
+            break
+
         xk = x1 - ((x1-x0)/(fx(x1)-fx(x0)))*fx(x1) #Se calcula xk
         error = np.absolute(fx(xk)) #Se calcula el error
         errores.append(error) #Se añade el error a la lista de errores
@@ -139,7 +149,6 @@ def secante(func, x0, x1, tol, iterMax):
     return [xk, cont, np.absolute(fx(xk))] #Retorna xk, las iteraciones, y f(x)
 
 def bolzano(x0,x1):
-
     if(x0*x1 < 0):
         return True
     else:

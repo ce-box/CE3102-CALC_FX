@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import * 
-from tkinter import font
 
 root = Tk() 
 
@@ -16,23 +15,23 @@ def window():
     selectLbl.config(fg="black", bg="gray", font=("Times New Roman",15)) 
     selectLbl.place(x=10, y=10)
 
-    nRaph = tk.Button(root, text="Biseccion",   command= lambda: interv(1))
+    nRaph = tk.Button(root, text="Biseccion",   command= lambda: params(1))
     nRaph.place(x = 10, y = 50)
 
-    nRaph = tk.Button(root, text="Falsa posicion",  command= lambda: interv(2))
+    nRaph = tk.Button(root, text="Falsa posicion",  command= lambda: params(2))
     nRaph.place(x = 10, y = 90)
 
-    nRaph = tk.Button(root, text="Newton-Raphson",  command= lambda: interv(3))
+    nRaph = tk.Button(root, text="Newton-Raphson",  command= lambda: params(3))
     nRaph.place(x = 10, y = 130)
 
-    nRaph = tk.Button(root, text="Secante",  command= lambda: interv(4))
+    nRaph = tk.Button(root, text="Secante",  command= lambda: params(4))
     nRaph.place(x = 10, y = 170)
     
     root.mainloop()
 
-def interv(x):
+def params(num):
 
-    print(x)
+    close()
 
     selectLbl = Label(root, text="Ingrese parametros:")
     selectLbl.config(fg="black", bg="gray", font=("Times New Roman",15)) 
@@ -59,11 +58,38 @@ def interv(x):
     iterM = tk.Entry(root)
     iterM.place(x=275, y=170)
 
-    iterMLbl = Label(root, text="Intervalo o Valores iniciales")
-    iterMLbl.config(fg="black", bg="gray", font=("Times New Roman",12)) 
-    iterMLbl.place(x=275, y=200)
+    if(num == 1 or num == 2):
+        
+        rangeLbl = Label(root, text="Intervalo")
+        rangeLbl.config(fg="black", bg="gray", font=("Times New Roman",12)) 
+        rangeLbl.place(x=275, y=200)
 
-    iterM = tk.Entry(root)
-    iterM.place(x=275, y=220)
+        rangeValue = tk.Entry(root)
+        rangeValue.place(x=275, y=220)
+
+    elif(num ==  3):
+
+        valueLbl = Label(root, text="Valor inicial")
+        valueLbl.config(fg="black", bg="gray", font=("Times New Roman",12)) 
+        valueLbl.place(x=275, y=200)
+
+        value = tk.Entry(root)
+        value.place(x=275, y=220)
+
+    elif(num == 4):
+
+        valuesLbl = Label(root, text="Valores iniciales")
+        valuesLbl.config(fg="black", bg="gray", font=("Times New Roman",12)) 
+        valuesLbl.place(x=275, y=200)
+
+        value1 = tk.Entry(root)
+        value1.config(width=5)
+        value1.place(x=275, y=220)
+
+        value2 = tk.Entry(root)
+        value2.config(width=5)
+        value2.place(x=330, y=220)
+    
+    
 
 window()

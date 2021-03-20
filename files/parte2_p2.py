@@ -95,14 +95,7 @@ def falsa_posicion(func, rango, tol, iterMax):
         if(np.absolute(fx(xk)) < tol):
             break
 
-    plt.plot(np.array(D), np.array(A))
-    plt.title("Gráfico")
-    plt.xlabel('Iteraciones')
-    plt.ylabel('Error')
-    plt.legend(["Error"])
-    plt.show() 
-
-    return [xk, np.absolute(fx(xk)), cont]
+    return [xk, np.absolute(fx(xk)), cont, D, A]
     
  
 def newton_raphson(func, xk, tol, iterMax):
@@ -141,7 +134,7 @@ def newton_raphson(func, xk, tol, iterMax):
 
         cont += 1 #Incrementa contador
 
-    return [xk, np.absolute(y), cont] #Retorna la aproximación del cero de la función, el error, y la cantidad de iteraciones
+    return [xk, np.absolute(y), cont, D, A] #Retorna la aproximación del cero de la función, el error, y la cantidad de iteraciones
         
 
 def secante(func, x0, x1, tol, iterMax):
@@ -180,14 +173,7 @@ def secante(func, x0, x1, tol, iterMax):
 
         cont += 1 #Incrementa contador
 
-    plt.plot(np.array(D), np.array(A))
-    plt.title("Gráfico")
-    plt.xlabel('Iteraciones')
-    plt.ylabel('Error')
-    plt.legend(["Error"])
-    plt.show() 
-
-    return [xk, cont, np.absolute(fx(xk))] #Retorna xk, las iteraciones, y f(x)
+    return [xk, np.absolute(fx(xk)), cont, D, A] #Retorna xk, las iteraciones, y f(x)
 
 def graphicPlot(D, A):
 

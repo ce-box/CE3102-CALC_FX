@@ -67,6 +67,11 @@ def params(num):
 
         rangeValue = tk.Entry(root)
         rangeValue.place(x=275, y=220)
+        
+        if(num == 1):
+            nRaph = tk.Button(root, text="Calcular",  command= lambda: result(func.get(), ast.literal_eval(rangeValue.get()), eval(tol.get()), int(iterM.get()), 1))
+        else:
+            nRaph = tk.Button(root, text="Calcular",  command= lambda: result(func.get(), ast.literal_eval(rangeValue.get()), eval(tol.get()), int(iterM.get()), 2))
 
     elif(num ==  3):
 
@@ -76,6 +81,8 @@ def params(num):
 
         value = tk.Entry(root)
         value.place(x=275, y=220)
+
+        nRaph = tk.Button(root, text="Calcular",  command= lambda: result(func.get(), eval(value.get()), eval(tol.get()), int(iterM.get()), 3))
 
     elif(num == 4):
 
@@ -91,16 +98,21 @@ def params(num):
         value2.config(width=5)
         value2.place(x=330, y=220)
 
-    nRaph = tk.Button(root, text="Calcular",  command= lambda: result(func.get(), rangeValue.get(), tol.get(), iterM.get()))
+        nRaph = tk.Button(root, text="Calcular",  command= lambda: result(func.get(), [eval(value1.get()), eval(value2.get())], eval(tol.get()), int(iterM.get()), 4))
+    
     nRaph.place(x = 310, y = 250)
     
-def result(func, rango, tol, iterMax):
-    
-    rango = ast.literal_eval(rango)
-    tol = eval(tol)
-    iterMax = int(iterMax)
+def result(func, rango, tol, iterMax, pos):
 
-    result = p2.biseccion(func, rango, tol, iterMax)
+    if(pos == 1):
+        result = p2.biseccion(func, rango, tol, iterMax)
+    elif(pos == 2):
+        result = p2.falsa_posicion(func, rango, tol, iterMax)
+    elif(pos == 3):
+        result = p2.newton_raphson(func, rango, tol, iterMax)
+    elif(pos == 4):
+        result = p2.secante(func, rango[0], rango[1], tol, iterMax)
+    
 
     apprLbl = Label(root, text="Aproximacion de integral:")
     apprLbl.config(fg="black", bg="gray", font=("Times New Roman",15)) 

@@ -43,14 +43,7 @@ def biseccion(func,rango, tol, iterMax):
         if(np.absolute(y) < tol):
             break
 
-    plt.plot(np.array(D), np.array(A))
-    plt.title("Gráfico")
-    plt.xlabel('Iteraciones')
-    plt.ylabel('Error')
-    plt.legend(["Error"])
-    plt.show() 
-
-    return [x, np.absolute(y), cont] #Retorna la aproximación del cero de f(x), el error, y la cantidad de iteraciones
+    return [x, np.absolute(y), cont, D, A] #Retorna la aproximación del cero de f(x), el error, y la cantidad de iteraciones
 
 def falsa_posicion(func, rango, tol, iterMax):
 
@@ -148,13 +141,6 @@ def newton_raphson(func, xk, tol, iterMax):
 
         cont += 1 #Incrementa contador
 
-    plt.plot(np.array(D), np.array(A))
-    plt.title("Gráfico")
-    plt.xlabel('Iteraciones')
-    plt.ylabel('Error')
-    plt.legend(["Error"])
-    plt.show() 
-
     return [xk, np.absolute(y), cont] #Retorna la aproximación del cero de la función, el error, y la cantidad de iteraciones
         
 
@@ -202,6 +188,15 @@ def secante(func, x0, x1, tol, iterMax):
     plt.show() 
 
     return [xk, cont, np.absolute(fx(xk))] #Retorna xk, las iteraciones, y f(x)
+
+def graphicPlot(D, A):
+
+    plt.plot(np.array(D), np.array(A))
+    plt.title("Gráfico")
+    plt.xlabel('Iteraciones')
+    plt.ylabel('Error')
+    plt.legend(["Error"])
+    plt.show() 
 
 def bolzano(x0,x1):
     if(x0*x1 < 0):

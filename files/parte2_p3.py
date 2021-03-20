@@ -1,12 +1,15 @@
 import tkinter as tk
 from tkinter import * 
+from parte2_p2 import *
+import parte2_p2 as p2
+import ast
 
 root = Tk() 
 
 def window():
 
     root.title("Calculadora") #Cambiar el nombre de la ventana 
-    root.geometry("520x480") #Configurar tamaño 
+    root.geometry("470x430") #Configurar tamaño 
     root.iconbitmap("images/calc.ico") #Cambiar el icono 
     root.config(bg="gray") #Cambiar color de fondo
     root.resizable(0,0)
@@ -30,8 +33,6 @@ def window():
     root.mainloop()
 
 def params(num):
-
-    close()
 
     selectLbl = Label(root, text="Ingrese parametros:")
     selectLbl.config(fg="black", bg="gray", font=("Times New Roman",15)) 
@@ -89,7 +90,36 @@ def params(num):
         value2 = tk.Entry(root)
         value2.config(width=5)
         value2.place(x=330, y=220)
+
+    nRaph = tk.Button(root, text="Calcular",  command= lambda: result(func.get(), rangeValue.get(), tol.get(), iterM.get()))
+    nRaph.place(x = 310, y = 250)
     
+def result(func, rango, tol, iterMax):
     
+    rango = ast.literal_eval(rango)
+    tol = eval(tol)
+    iterMax = int(iterMax)
+
+    result = p2.biseccion(func, rango, tol, iterMax)
+
+    apprLbl = Label(root, text="Aproximacion de integral:")
+    apprLbl.config(fg="black", bg="gray", font=("Times New Roman",15)) 
+    apprLbl.place(x=10, y=350)
+
+    approach = tk.Entry(root)
+    approach.place(x=225, y=355)
+    approach.config(width=25)
+    approach.insert(0, str(result[0]))
+
+    errorLbl = Label(root, text="Cota de error:")
+    errorLbl.config(fg="black", bg="gray", font=("Times New Roman",15)) 
+    errorLbl.place(x=10, y=390)
+
+    error = tk.Entry(root)
+    error.place(x=130, y=395)
+    error.config(width=25)
+    error.insert(0, str(result[1]))
+
+    p2.graphicPlot(result[3], result[4])
 
 window()

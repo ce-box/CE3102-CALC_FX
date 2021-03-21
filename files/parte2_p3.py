@@ -4,32 +4,35 @@ from parte2_p2 import *
 import parte2_p2 as p2
 import ast
 
-root = Tk() 
-labels = []
+root = Tk() #Inicializa ventana
+labels = [] #Lista de labels (para borrar)
 
 def window():
 
-    root.title("Calculadora") #Cambiar el nombre de la ventana 
-    root.geometry("470x430") #Configurar tamaño 
-    root.iconbitmap("images/calc.ico") #Cambiar el icono 
-    root.config(bg="gray") #Cambiar color de fondo
+    #Especificaciones de ventana
+    root.title("Calculadora")  
+    root.geometry("470x430") 
+    root.iconbitmap("images/calc.ico") 
+    root.config(bg="gray") 
     root.resizable(0,0)
 
+    #Label de seleccion
     selectLbl = Label(root, text="Seleccione un metodo:")
     selectLbl.config(fg="black", bg="gray", font=("Times New Roman",15)) 
     selectLbl.place(x=10, y=10)
 
-    nRaph = tk.Button(root, text="Biseccion",   command= lambda: params(1))
-    nRaph.place(x = 10, y = 50)
+    #Boton para seleccionar Newton-Raphson
+    bisect = tk.Button(root, text="Biseccion",   command= lambda: params(1))
+    bisect.place(x = 10, y = 50)
 
-    nRaph = tk.Button(root, text="Falsa posicion",  command= lambda: params(2))
-    nRaph.place(x = 10, y = 90)
+    fPos = tk.Button(root, text="Falsa posicion",  command= lambda: params(2))
+    fPos.place(x = 10, y = 90)
 
     nRaph = tk.Button(root, text="Newton-Raphson",  command= lambda: params(3))
     nRaph.place(x = 10, y = 130)
 
-    nRaph = tk.Button(root, text="Secante",  command= lambda: params(4))
-    nRaph.place(x = 10, y = 170)
+    sec = tk.Button(root, text="Secante",  command= lambda: params(4))
+    sec.place(x = 10, y = 170)
     
     root.mainloop()
 

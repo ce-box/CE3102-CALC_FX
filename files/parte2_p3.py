@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import * 
+from tkinter import *
 from parte2_p2 import *
 import parte2_p2 as p2
 import ast
@@ -69,9 +69,9 @@ def params(num):
         rangeValue.place(x=275, y=220)
         
         if(num == 1):
-            nRaph = tk.Button(root, text="Calcular",  command= lambda: result(func.get(), ast.literal_eval(rangeValue.get()), eval(tol.get()), int(iterM.get()), 1))
+            nRaph = tk.Button(root, text="Calcular",  command= lambda: check(func.get(), rangeValue.get(), tol.get(), iterM.get(), 1))
         else:
-            nRaph = tk.Button(root, text="Calcular",  command= lambda: result(func.get(), ast.literal_eval(rangeValue.get()), eval(tol.get()), int(iterM.get()), 2))
+            nRaph = tk.Button(root, text="Calcular",  command= lambda: check(func.get(), rangeValue.get(), tol.get(), iterM.get(), 2))
 
     elif(num ==  3):
 
@@ -82,7 +82,7 @@ def params(num):
         value = tk.Entry(root)
         value.place(x=275, y=220)
 
-        nRaph = tk.Button(root, text="Calcular",  command= lambda: result(func.get(), eval(value.get()), eval(tol.get()), int(iterM.get()), 3))
+        nRaph = tk.Button(root, text="Calcular",  command= lambda: check(func.get(),value.get(), tol.get(), iterM.get(), 3))
 
     elif(num == 4):
 
@@ -98,10 +98,32 @@ def params(num):
         value2.config(width=5)
         value2.place(x=330, y=220)
 
-        nRaph = tk.Button(root, text="Calcular",  command= lambda: result(func.get(), [eval(value1.get()), eval(value2.get())], eval(tol.get()), int(iterM.get()), 4))
+        nRaph = tk.Button(root, text="Calcular",  command= lambda: check(func.get(), [value1.get(), value2.get()], tol.get(), iterM.get(), 4))
     
     nRaph.place(x = 310, y = 250)
+
+def check(func, rango, tol, iterM, num):
+
+    try:
+        
+        if(num == 1 or 2):
+            rango = ast.literal_eval(rango)
+        elif(num == 3):
+            rango = eval(value.get())
+        elif(num == 4):
+            rango = [eval(rango[0]), eval(rango[1])]
+
+        tol = eval(tol)
+
+        iterM = int(iterM.get())
+
+        result(func, rango, tol, iterM, num)
+        
+    except:
+
+        tk.messagebox.showinfo(message="Error al digitar la funcion", title="ERROR")
     
+  
 def result(func, rango, tol, iterMax, pos):
 
     if(pos == 1):

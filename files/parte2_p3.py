@@ -57,6 +57,7 @@ def window():
 
 def manualGuide():
 
+    #Muestra el manual de usuario
     tk.messagebox.showinfo(message=
                            ("Manual de Usuario \n"
                            + "1. Seleccione el método a utilizar (columna derecha) \n"

@@ -4,8 +4,32 @@ from parte2_p2 import *
 import parte2_p2 as p2
 import ast
 
+
 root = Tk() #Inicializa ventana
 labels = [] #Lista de labels (para borrar)
+results = []
+
+dispImage = PhotoImage(file = "images/disp.png")
+bg = Label(root, image = dispImage)
+bg.place(x = 110, y =  20)
+
+canvas = tk.Canvas(root, bg = "black", width=245.5, height=85.6)
+canvas.place(x = 112.3, y = 22.3)
+
+methType = Label(root, text="Biseccion")
+methType.config(fg="white", bg="black", font=("Times New Roman",8)) 
+methType.place(x=120, y=30)
+labels.append(methType)
+
+methAprox = Label(root, text="Aprox:")
+methAprox.config(fg="white", bg="black", font=("Times New Roman",8)) 
+methAprox.place(x=120, y=55)
+results.append(methAprox)
+
+methError = Label(root, text="Error:")
+methError.config(fg="white", bg="black", font=("Times New Roman",8)) 
+methError.place(x=120, y=80)
+results.append(methError)
 
 def window():
 
@@ -13,78 +37,105 @@ def window():
     root.title("Calculadora")  
     root.geometry("470x430") 
     root.iconbitmap("images/calc.ico") 
-    root.config(bg="gray") 
+    root.config(bg="deep sky blue") 
     root.resizable(0,0)
 
     #Label de seleccion
     selectLbl = Label(root, text="Seleccione un metodo:")
-    selectLbl.config(fg="black", bg="gray", font=("Times New Roman",15)) 
-    selectLbl.place(x=10, y=10)
+    selectLbl.config(fg="black", bg="deep sky blue", font=("Times New Roman",15)) 
+    selectLbl.place(x=10, y=180)
 
     #Boton para seleccionar Newton-Raphson
-    bisect = tk.Button(root, text="Biseccion",   command= lambda: params(1))
-    bisect.place(x = 10, y = 50)
+    bisect = tk.Button(root, text="Biseccion", width = 20, command= lambda: params(1, "Biseccion"))
+    bisect.place(x = 10, y = 220)
 
-    fPos = tk.Button(root, text="Falsa posicion",  command= lambda: params(2))
-    fPos.place(x = 10, y = 90)
+    fPos = tk.Button(root, text="Falsa posicion", width = 20, command= lambda: params(2, "Falsa Posicion"))
+    fPos.place(x = 10, y = 260)
 
-    nRaph = tk.Button(root, text="Newton-Raphson",  command= lambda: params(3))
-    nRaph.place(x = 10, y = 130)
+    nRaph = tk.Button(root, text="Newton-Raphson", width = 20, command= lambda: params(3, "Newton-Raphson"))
+    nRaph.place(x = 10, y = 300)
 
-    sec = tk.Button(root, text="Secante",  command= lambda: params(4))
-    sec.place(x = 10, y = 170)
+    sec = tk.Button(root, text="Secante", width = 20, command= lambda: params(4, "Secante"))
+    sec.place(x = 10, y = 340)
+
+    manual = tk.Button(root, text="Ayuda", command = manualFile)
+    manual.place(x = 40, y = 20)
     
     root.mainloop()
 
-def params(num):
+
+def manualFile():
+    global path
+    wb.open_new(r'C:\Users\Admin\Desktop\Semestre 1 2021\ANPI\Tarea 1\Calc-repo\CE3102-CALC_FX\files\docs.pdf')
+
+def params(num, mType):
 
     global labels
+    global results
 
     if(len(labels) > 0):
         for label in labels:
             label.destroy()
 
+    for result in results:
+        result.destroy()
+
+    methAprox = Label(root, text=("Aprox: "))
+    methAprox.config(fg="white", bg="black", font=("Times New Roman",8)) 
+    methAprox.place(x=120, y=55)
+    results.append(methAprox)
+
+    methError = Label(root, text="Error: ")
+    methError.config(fg="white", bg="black", font=("Times New Roman",8)) 
+    methError.place(x=120, y=80)
+    results.append(methError)
+
+    methType = Label(root, text=mType)
+    methType.config(fg="white", bg="black", font=("Times New Roman",8)) 
+    methType.place(x=120, y=30)
+    labels.append(methType)
+
     selectLbl = Label(root, text="Ingrese parametros:")
-    selectLbl.config(fg="black", bg="gray", font=("Times New Roman",15)) 
-    selectLbl.place(x=275, y=10)
+    selectLbl.config(fg="black", bg="deep sky blue", font=("Times New Roman",15)) 
+    selectLbl.place(x=275, y=180)
     labels.append(selectLbl)
     
     funcLbl = Label(root, text="Funcion f(x)")
-    funcLbl.config(fg="black", bg="gray", font=("Times New Roman",12)) 
-    funcLbl.place(x=275, y=50)
+    funcLbl.config(fg="black", bg="deep sky blue", font=("Times New Roman",12)) 
+    funcLbl.place(x=275, y=220)
     labels.append(funcLbl)
 
     func = tk.Entry(root)
-    func.place(x=275, y=70)
+    func.place(x=275, y=240)
     labels.append(func)
 
     tolLbl = Label(root, text="Tolerancia")
-    tolLbl.config(fg="black", bg="gray", font=("Times New Roman",12)) 
-    tolLbl.place(x=275, y=100)
+    tolLbl.config(fg="black", bg="deep sky blue", font=("Times New Roman",12)) 
+    tolLbl.place(x=275, y=270)
     labels.append(tolLbl)
 
     tol = tk.Entry(root)
-    tol.place(x=275, y=120)
+    tol.place(x=275, y=290)
     labels.append(tol)
 
     iterMLbl = Label(root, text="Iteraciones maximas")
-    iterMLbl.config(fg="black", bg="gray", font=("Times New Roman",12)) 
-    iterMLbl.place(x=275, y=150)
+    iterMLbl.config(fg="black", bg="deep sky blue", font=("Times New Roman",12)) 
+    iterMLbl.place(x=275, y=320)
     labels.append(iterMLbl)
 
     iterM = tk.Entry(root)
-    iterM.place(x=275, y=170)
+    iterM.place(x=275, y=340)
     labels.append(iterM)
 
     if(num == 1 or num == 2):
         
         rangeLbl = Label(root, text="Intervalo")
-        rangeLbl.config(fg="black", bg="gray", font=("Times New Roman",12)) 
-        rangeLbl.place(x=275, y=200)
+        rangeLbl.config(fg="black", bg="deep sky blue", font=("Times New Roman",12)) 
+        rangeLbl.place(x=275, y=370)
         labels.append(rangeLbl)
 
         rangeValue = tk.Entry(root)
-        rangeValue.place(x=275, y=220)
+        rangeValue.place(x=275, y=390)
         labels.append(rangeValue)
         
         if(num == 1):
@@ -95,12 +146,12 @@ def params(num):
     elif(num ==  3):
 
         valueLbl = Label(root, text="Valor inicial")
-        valueLbl.config(fg="black", bg="gray", font=("Times New Roman",12)) 
-        valueLbl.place(x=275, y=200)
+        valueLbl.config(fg="black", bg="deep sky blue", font=("Times New Roman",12)) 
+        valueLbl.place(x=275, y=370)
         labels.append(valueLbl)
 
         value = tk.Entry(root)
-        value.place(x=275, y=220)
+        value.place(x=275, y=390)
         labels.append(value)
 
         nRaph = tk.Button(root, text="Calcular",  command= lambda: check(func.get(),value.get(), tol.get(), iterM.get(), 3))
@@ -108,23 +159,23 @@ def params(num):
     elif(num == 4):
 
         valuesLbl = Label(root, text="Valores iniciales")
-        valuesLbl.config(fg="black", bg="gray", font=("Times New Roman",12)) 
-        valuesLbl.place(x=275, y=200)
+        valuesLbl.config(fg="black", bg="deep sky blue", font=("Times New Roman",12)) 
+        valuesLbl.place(x=275, y=370)
         labels.append(valuesLbl)
 
         value1 = tk.Entry(root)
         value1.config(width=5)
-        value1.place(x=275, y=220)
+        value1.place(x=275, y=390)
         labels.append(value1)
 
         value2 = tk.Entry(root)
         value2.config(width=5)
-        value2.place(x=330, y=220)
+        value2.place(x=330, y=390)
         labels.append(value2)
 
         nRaph = tk.Button(root, text="Calcular",  command= lambda: check(func.get(), [value1.get(), value2.get()], tol.get(), iterM.get(), 4))
     
-    nRaph.place(x = 310, y = 250)
+    nRaph.place(x = 390, y = 20)
 
 def check(func, rango, tol, iterM, num):
 
@@ -150,6 +201,11 @@ def check(func, rango, tol, iterM, num):
   
 def result(func, rango, tol, iterMax, pos):
 
+    global results
+
+    for result in results:
+        result.destroy()
+    
     if(pos == 1):
         result = p2.biseccion(func, rango, tol, iterMax)
     elif(pos == 2):
@@ -160,24 +216,22 @@ def result(func, rango, tol, iterMax, pos):
         result = p2.secante(func, rango[0], rango[1], tol, iterMax)
     
 
-    apprLbl = Label(root, text="Aproximacion de integral:")
-    apprLbl.config(fg="black", bg="gray", font=("Times New Roman",15)) 
-    apprLbl.place(x=10, y=350)
+    methAprox = Label(root, text=("Aprox: " + str(result[0])))
+    methAprox.config(fg="white", bg="black", font=("Times New Roman",8)) 
+    methAprox.place(x=120, y=55)
+    results.append(methAprox)
 
-    approach = tk.Entry(root)
-    approach.place(x=225, y=355)
-    approach.config(width=25)
-    approach.insert(0, str(result[0]))
+    methError = Label(root, text="Error: " + str(result[1]))
+    methError.config(fg="white", bg="black", font=("Times New Roman",8)) 
+    methError.place(x=120, y=80)
+    results.append(methError)
 
-    errorLbl = Label(root, text="Cota de error:")
-    errorLbl.config(fg="black", bg="gray", font=("Times New Roman",15)) 
-    errorLbl.place(x=10, y=390)
+    gPlot = tk.Button(root, text="Graficar",  command= lambda: graphic(result[3], result[4]))
+    gPlot.place(x = 390, y = 50)
 
-    error = tk.Entry(root)
-    error.place(x=130, y=395)
-    error.config(width=25)
-    error.insert(0, str(result[1]))
+def graphic(A,D):
 
-    p2.graphicPlot(result[3], result[4])
+    p2.graphicPlot(A, D)
 
+params(1, "Biseccion")
 window()

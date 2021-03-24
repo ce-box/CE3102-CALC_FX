@@ -177,6 +177,7 @@ def secante(func, x0, x1, tol, iterMax):
 
 def graphicPlot(D, A):
 
+    #Funcion utilizada para graficar
     plt.plot(np.array(D), np.array(A))
     plt.title("Gráfico")
     plt.xlabel('Iteraciones')
@@ -185,6 +186,8 @@ def graphicPlot(D, A):
     plt.show() 
 
 def bolzano(x0,x1):
+
+    #Verificacion del teorema de bolzano
     if(x0*x1 < 0):
         return True
     else:

@@ -4,7 +4,6 @@ from parte2_p2 import *
 import parte2_p2 as p2
 import ast
 
-
 root = Tk() #Inicializa ventana
 labels = [] #Lista de labels (para borrar)
 results = [] #Lista de labels (display de resultados)
@@ -17,23 +16,6 @@ bg.place(x = 110, y =  20)
 #Canvas para display de resultados
 canvas = tk.Canvas(root, bg = "black", width=245.5, height=85.6)
 canvas.place(x = 112.3, y = 22.3)
-
-#Label del metodo seleccionado
-methType = Label(root, text="Biseccion")
-methType.config(fg="white", bg="black", font=("Times New Roman",8)) 
-methType.place(x=120, y=30)
-labels.append(methType)
-
-#Label para el resultado de la aproximacion
-methAprox = Label(root, text="Aprox:")
-methAprox.config(fg="white", bg="black", font=("Times New Roman",8)) 
-methAprox.place(x=120, y=55)
-results.append(methAprox)
-#Label para el resultado de error
-methError = Label(root, text="Error:")
-methError.config(fg="white", bg="black", font=("Times New Roman",8)) 
-methError.place(x=120, y=80)
-results.append(methError)
 
 def window():
 
@@ -94,23 +76,29 @@ def params(num, mType):
     for result in results:
         result.destroy()
 
-    #Crea nuevamente el label para la aproximacion
-    methAprox = Label(root, text=("Aprox: "))
+    #Label del metodo seleccionado
+    methType = Label(root, text=mType)
+    methType.config(fg="deep sky blue", bg="black", font=("Times New Roman",10)) 
+    methType.place(x=205, y=30)
+    labels.append(methType)
+
+    #Label para el resultado de la aproximacion
+    methAprox = Label(root, text="Aprox:")
     methAprox.config(fg="white", bg="black", font=("Times New Roman",8)) 
     methAprox.place(x=120, y=55)
     results.append(methAprox)
 
-    #Crea nuevamente el label para el error
-    methError = Label(root, text="Error: ")
+    #Label para el resultado de error
+    methError = Label(root, text="Error:")
     methError.config(fg="white", bg="black", font=("Times New Roman",8)) 
     methError.place(x=120, y=80)
     results.append(methError)
 
-    #Crea nuevamente el label para indicar el metodo utilizado
-    methType = Label(root, text=mType)
-    methType.config(fg="white", bg="black", font=("Times New Roman",8)) 
-    methType.place(x=120, y=30)
-    labels.append(methType)
+    #Label para el registro de iteraciones
+    methIter = Label(root, text="Iter:")
+    methIter.config(fg="white", bg="black", font=("Times New Roman",8)) 
+    methIter.place(x=300, y=80)
+    results.append(methIter)
 
     #Label de instruccion
     selectLbl = Label(root, text="Ingrese parametros:")
@@ -283,6 +271,12 @@ def result(func, rango, tol, iterMax, pos):
     methError.config(fg="white", bg="black", font=("Times New Roman",8)) 
     methError.place(x=120, y=80)
     results.append(methError)
+
+    #Crea el label de las iteraciones con su resultado
+    methIter = Label(root, text="Iter:" + str(result[2]))
+    methIter.config(fg="white", bg="black", font=("Times New Roman",8)) 
+    methIter.place(x=300, y=80)
+    results.append(methIter)
 
     #Boton para graficar    
     gPlot = tk.Button(root, text="Graficar",  command= lambda: graphic(result[3], result[4]))

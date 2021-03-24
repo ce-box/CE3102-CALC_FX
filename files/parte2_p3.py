@@ -1,4 +1,4 @@
-import tkinter as tk
+import tkinter as tk 
 from tkinter import *
 from parte2_p2 import *
 import parte2_p2 as p2
@@ -57,9 +57,16 @@ def window():
 
 def manualFile():
 
-    #Muestra un pdf con el manual de usuario
-    global path
-    wb.open_new(r'C:\Users\Admin\Desktop\Semestre 1 2021\ANPI\Tarea 1\Calc-repo\CE3102-CALC_FX\files\docs.pdf')
+    tk.messagebox.showinfo(message=
+                           ("Manual de Usuario \n"
+                           + "1. Seleccione el método a utilizar (columna derecha) \n"
+                           + "2. Una vez seleccionado el método, ingrese los parámetros de forma correcta \n"
+                           + "3. De no haber ingresado los parámetros de forma correcta, se mostrará un mensaje de error \n"
+                           + "4. Habiendo digitado los parámetros correctamente, presione el botón “calcular” \n"
+                           + "5. Se le mostrará en el display los resultados: Aproximación al cero, error absoluto, iteraciones \n"
+                           + "6. Seguidamente puede visualizar la gráfica presionando sobre el botón de “gráfica” \n"
+                           + "7. Puede seguir utilizando los métodos disponibles siguiendo los nuevamente los pasos del 2 al 7")
+                           , title="Guia")
 
 
 def params(num, mType):

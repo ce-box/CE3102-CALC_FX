@@ -48,14 +48,14 @@ def window():
     sec.place(x = 10, y = 340)
 
     #Boton para mostrar el manual de usuario de la calculadora
-    manual = tk.Button(root, text="Ayuda", command = manualFile)
+    manual = tk.Button(root, text="Ayuda", command = manualGuide)
     manual.place(x = 40, y = 20)
 
     #Inicializacion de la ventana
     root.mainloop()
 
 
-def manualFile():
+def manualGuide():
 
     tk.messagebox.showinfo(message=
                            ("Manual de Usuario \n"

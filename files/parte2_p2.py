@@ -178,8 +178,9 @@ def secante(func, x0, x1, tol, iterMax):
 def graphicPlot(D, A):
 
     #Funcion utilizada para graficar
+    plt.figure("Grafica")
     plt.plot(np.array(D), np.array(A))
-    plt.title("Gráfico")
+    plt.title("Gráfico Iteraciones - Errores")
     plt.xlabel('Iteraciones')
     plt.ylabel('Error')
     plt.legend(["Error"])

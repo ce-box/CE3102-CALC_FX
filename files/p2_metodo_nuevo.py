@@ -3,7 +3,7 @@ from sympy import sympify, Symbol
 x = Symbol('x') #Se comvierte la variable a simbolico
 
 #Funcion principal del metodo
-def metodo_nuevo(x_0, f, tol=10e-8, iter_max=2500):
+def metodo_nuevo(x_0, f, tol, iter_max):
 
     if tol <= 0:
         raise  ValueError('Tolerancia no debe ser cero.') #Error al ingresar una tolerancia con las condiones no aptas
@@ -12,13 +12,20 @@ def metodo_nuevo(x_0, f, tol=10e-8, iter_max=2500):
     x_k = x_0
     error = tol+1
 
+    D = []
+    A = []
+
     # Cliclo de iteraciones segun tolerancia o maximo de iteraciones
     while error > tol and k < iter_max:
         x_k = calc_sgte(x_k, f)
         error = calc_error(x_k, f)
+
+        D.append(k)
+        A.append(error)
+        
         k+=1
 
-    return [x_k,k+1, error]
+    return [x_k, error, k, D, A]
 
 #Calcula el error 
 def calc_error(x_k, f):

@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import *
 from parte2_p2 import *
 import parte2_p2 as p2
+from p2_metodo_nuevo import *
+import p2_metodo_nuevo as p1
 import ast
 
 root = Tk() #Inicializa ventana
@@ -46,6 +48,10 @@ def window():
     #Boton para seleccionar el metodo de la secante
     sec = tk.Button(root, text="Secante", width = 20, command= lambda: params(4, "Secante"))
     sec.place(x = 10, y = 340)
+
+    #Boton para seleccionar el nuevo metodo
+    nMeth = tk.Button(root, text="Nuevo Metodo", width = 20, command= lambda: params(5, "Nuevo Metodo"))
+    nMeth.place(x = 10, y = 380)
 
     #Boton para mostrar el manual de usuario de la calculadora
     manual = tk.Button(root, text="Ayuda", command = manualGuide)
@@ -164,7 +170,7 @@ def params(num, mType):
             calc = tk.Button(root, text="Calcular",  command= lambda: check(func.get(), rangeValue.get(), tol.get(), iterM.get(), 2))
 
     #En caso de haber seleccionado Biseccion o falsa posicion
-    elif(num ==  3):
+    elif(num ==  3 or num == 5):
 
         #Label y text-box para ingresar el valor inicial
         valueLbl = Label(root, text="Valor inicial")
@@ -176,8 +182,11 @@ def params(num, mType):
         value.place(x=275, y=390)
         labels.append(value)
 
-        #Verifica los datos ingresados para el metodo Newton-Raphson
-        calc = tk.Button(root, text="Calcular",  command= lambda: check(func.get(),value.get(), tol.get(), iterM.get(), 3))
+        #Verifica los datos ingresados dependiendo del metodo seleccionado (Newton-Raphson o Nuevo Metodo)
+        if(3):
+            calc = tk.Button(root, text="Calcular",  command= lambda: check(func.get(),value.get(), tol.get(), iterM.get(), 3))
+        else:
+            calc = tk.Button(root, text="Calcular",  command= lambda: check(func.get(),value.get(), tol.get(), iterM.get(), 5))
 
     elif(num == 4):
 
@@ -214,7 +223,7 @@ def check(func, rango, tol, iterM, num):
             #Verifica rango (Biseccion - Falsa Posicion)
             rango = ast.literal_eval(rango)
             
-        elif(num == 3):
+        elif(num == 3 or num == 5):
 
             #Verifica valor inicial (Newton-Raphson)
             rango = eval(rango)
@@ -267,6 +276,11 @@ def result(func, rango, tol, iterMax, pos):
 
         #Secante
         result = p2.secante(func, rango[0], rango[1], tol, iterMax)
+
+    elif(pos == 5):
+
+        #Metodo Nuevo
+        result = p1.metodo_nuevo(func, rango, tol, iterMax)
     
     #Crea el label de la aproximacion con su resultado
     methAprox = Label(root, text=("Aprox: " + str(result[0])))

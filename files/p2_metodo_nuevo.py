@@ -3,7 +3,7 @@ from sympy import sympify, Symbol
 x = Symbol('x') #Se comvierte la variable a simbolico
 
 #Funcion principal del metodo
-def dhm(x_0, f, tol=10e-8, iter_max=2500):
+def metodo_nuevo(x_0, f, tol=10e-8, iter_max=2500):
 
     if tol <= 0:
         raise  ValueError('Tolerancia no debe ser cero.') #Error al ingresar una tolerancia con las condiones no aptas
@@ -43,17 +43,17 @@ def calc_sgte(x_k, f):
 if __name__ == '__main__':
     # Cada caso de prueba recibe: valor de X0, Ecuacion y numero de iteraciones maximas
     # Test 1. Ejemplo (b)
-    result = dhm(1.5, 'x^3+4*x^2-10', iter_max=7)
+    result = metodo_nuevo(1.5, 'x^3+4*x^2-10', iter_max=7)
     print(result)
 
     # Test 2. Ejemplo (h)
-    result = dhm(0.7, 'x^2-exp(x)-3*x+2', iter_max=7)
+    result = metodo_nuevo(0.7, 'x^2-exp(x)-3*x+2', iter_max=7)
     print(result)
 
     # Test 3. Ejemplo (e)
-    result = dhm(2, 'x^3-10', iter_max=7)
+    result = metodo_nuevo(2, 'x^3-10', iter_max=7)
     print(result)
 
     # Test 4. Ejemplo (c)
-    result = dhm(1, 'cos(x)-x', iter_max=6)
+    result = metodo_nuevo(1, 'cos(x)-x', iter_max=6)
     print(result)
